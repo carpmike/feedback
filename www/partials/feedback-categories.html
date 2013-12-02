@@ -1,0 +1,25 @@
+<div class="topcoat-navigation-bar">
+    <div class="topcoat-navigation-bar__item left quarter">
+	    <a class="topcoat-icon-button--quiet center nav-button" href="" ng-click="back()">
+	        <span class="topcoat-icon topcoat-icon--back"></span>
+	    </a>
+    </div>
+    <div class="topcoat-navigation-bar__item center half">
+        <h1 class="topcoat-navigation-bar__title nav-title">Categories</h1>
+    </div>
+    <div class="topcoat-navigation-bar__item right quarter">
+        <a class="topcoat-icon-button--quiet center nav-button" href="" ng-click="home()">
+            <span class="topcoat-icon topcoat-icon--home"></span>
+        </a>
+    </div>
+</div>
+<div class="topcoat-list__container scroller" style="top:70px;">
+    <ul class="topcoat-list list">
+        <li ng-repeat="category in categories | filter:query" class="topcoat-list__item">
+            <a ng-click="go('/notify/' + employee.id + '&positive=1')">
+                <p>{{category.name}}</p>
+            </a>
+        </li>
+    </ul>
+</div>
+
