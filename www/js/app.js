@@ -5,7 +5,8 @@ angular.module('myApp', [
     'ngRoute',
     'ngAnimate',
     'myApp.controllers',
-    'myApp.memoryServices'
+    'myApp.memoryServices',
+    'myApp.restServices'
 ]).
 config(['$routeProvider', function ($routeProvider) {
     $routeProvider.when('/receivers', {templateUrl: 'partials/employee-list.html', controller: 'EmployeeListCtrl'});
