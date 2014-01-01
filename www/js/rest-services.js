@@ -1,9 +1,9 @@
 angular.module('myApp.restServices', ['ngResource'])
-    .factory('Employee', ['$resource',
+    .factory('person', ['$resource',
         function ($resource) {
-            return $resource('http://feedback-web.carpmike.cloudbees.net/persons', {});
+            return $resource('http://feedback-web.carpmike.cloudbees.net/persons');
         }])    
-    .factory('Category', ['$resource',
+    .factory('category', ['$resource',
         function ($resource) {
-            return $resource('http://feedback-web.carpmike.cloudbees.net/categories', {});
+            return $resource('http://feedback-web.carpmike.cloudbees.net/categories');
         }]);

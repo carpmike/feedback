@@ -5,12 +5,13 @@ angular.module('myApp', [
     'ngRoute',
     'ngAnimate',
     'myApp.controllers',
-    'myApp.restServices'
+    'myApp.restServices',
+    'myApp.domainClasses'
 ]).
 config(['$routeProvider', function ($routeProvider) {
-    $routeProvider.when('/receivers', {templateUrl: 'partials/employee-list.html', controller: 'EmployeeListCtrl'});
-    $routeProvider.when('/feedback/:employeeId', {templateUrl: 'partials/feedback-choose.html', controller: 'FeedbackChooseCtrl'});
-    $routeProvider.when('/categorize/:employeeId:positive', {templateUrl: 'partials/feedback-categories.html', controller: 'FeedbackCategorizeCtrl'});
-    $routeProvider.when('/notify/:employeeId:positive', {templateUrl: 'partials/feedback-notification.html', controller: 'FeedbackNotifierCtrl'});
-    $routeProvider.otherwise({redirectTo: '/receivers'});
+    $routeProvider.when('/people', {templateUrl: 'partials/people.html', controller: 'PeopleCtrl'});
+    $routeProvider.when('/people/:personId/fbtype', {templateUrl: 'partials/feedback-type.html', controller: 'FeedbackTypeCtrl'});
+    $routeProvider.when('/people/:personId/fbtype/:fbtypeId/fbcat', {templateUrl: 'partials/feedback-categories.html', controller: 'FeedbackCategoryCtrl'});
+    $routeProvider.when('/people/:personId/fbtype/:fbtypeId/fbcat/:fbcatId/notify', {templateUrl: 'partials/feedback-notification.html', controller: 'FeedbackNotifierCtrl'});
+    $routeProvider.otherwise({redirectTo: '/people'});
 }]);

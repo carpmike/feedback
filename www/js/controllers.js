@@ -13,26 +13,20 @@ angular.module('myApp.controllers', [])
         }
         $rootScope.home = function(){
         	$scope.slide = 'slide-right';
-        	$location.url('/receivers');
+        	$location.url('/people');
         }
     }])
-    .controller('EmployeeListCtrl', ['$scope', 'Employee', function ($scope, Employee) {
-        $scope.employees = Employee.query();
+    .controller('PeopleCtrl', ['$scope', 'people', function ($scope, people) {
+        $scope.people = people.people;
     }])
-	.controller('FeedbackChooseCtrl', ['$scope', '$routeParams', 'Employee', function ($scope, $routeParams, Employee) {
-	    $scope.employee = Employee.get({employeeId: $routeParams.employeeId});
-	}])
-	.controller('FeedbackNotifierCtrl', ['$scope', '$routeParams', 'Employee', function ($scope, $routeParams, Employee) {
-		$scope.employee = Employee.get({employeeId: $routeParams.employeeId});
-	}])
-	.controller('FeedbackCategorizeCtrl', ['$scope', '$routeParams', 'Employee', 'Category', function ($scope, $routeParams, Employee, Category) {
-		$scope.employee = Employee.get({employeeId: $routeParams.employeeId});
-		$scope.categories = Category.query();
-		$scope.showSettings = false;
-	    $scope.changeSettings = function () {
-	        $scope.showSettings = true;
-	    };
-	    $scope.closeOverlay = function () {
-	        $scope.showSettings = false;
-	    };
-	}]);
+  	.controller('FeedbackTypeCtrl', ['$scope', '$log','$routeParams', 'people', function ($scope, $log, $routeParams, people) {
+        $scope.person = people.findById($routeParams.personId);
+  	}])
+    .controller('FeedbackCategoryCtrl', ['$scope', '$routeParams', 'people', 'categories', function ($scope, $routeParams, people, categories) {
+        $scope.personId = people.findById($routeParams.personId).id;
+        $scope.fbtypeId = $routeParams.fbtypeId;
+        $scope.categories = categories.categories;
+    }])
+  	.controller('FeedbackNotifierCtrl', ['$scope', '$routeParams', 'people', function ($scope, $routeParams, people) {
+  		  $scope.person = people.findById($routeParams.personId);
+  	}]);
