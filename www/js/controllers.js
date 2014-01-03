@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myApp.controllers', [])
+angular.module('myApp.controllers', ['ngResource'])
     .controller('MainCtrl', ['$scope', '$rootScope', '$window', '$location', function ($scope, $rootScope, $window, $location) {
         $scope.slide = '';
         $rootScope.back = function() {
@@ -27,6 +27,12 @@ angular.module('myApp.controllers', [])
         $scope.fbtypeId = $routeParams.fbtypeId;
         $scope.categories = categories.categories;
     }])
-  	.controller('FeedbackNotifierCtrl', ['$scope', '$routeParams', 'people', function ($scope, $routeParams, people) {
+  	.controller('FeedbackNotifierCtrl', ['$scope', '$routeParams', '$resource', 'people', function ($scope, $routeParams, $resource, people) {
   		  $scope.person = people.findById($routeParams.personId);
-  	}]);
+        $scope.person = people.findById($routeParams.personId);
+        var reminderService = $resource('http://feedback-web.carpmike.cloudbees.net/reminders', 
+                                          {}, 
+                                          {notify: {method:'POST'}
+                                        });
+        reminderService.notify({"personId":$scope.person.id, "categoryId":"1", "type":"positive"});
+;  	}]);
