@@ -3,3 +3,4 @@ platforms/*
 *.sublime-project
 *.sublime-workspace
 *.settings
+mongoose.conf

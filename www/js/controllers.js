@@ -27,12 +27,12 @@ angular.module('myApp.controllers', ['ngResource'])
         $scope.fbtypeId = $routeParams.fbtypeId;
         $scope.categories = categories.categories;
     }])
-  	.controller('FeedbackNotifierCtrl', ['$scope', '$routeParams', '$resource', 'people', function ($scope, $routeParams, $resource, people) {
+  	.controller('FeedbackNotifierCtrl', ['$scope', '$routeParams', '$resource', 'people', 'categories', function ($scope, $routeParams, $resource, people, categories) {
   		  $scope.person = people.findById($routeParams.personId);
-        $scope.person = people.findById($routeParams.personId);
+        $scope.category = categories.findById($routeParams.fbcatId);
         var reminderService = $resource('http://feedback-web.carpmike.cloudbees.net/reminders', 
                                           {}, 
-                                          {notify: {method:'POST'}
-                                        });
-        reminderService.notify({"personId":$scope.person.id, "categoryId":"1", "type":"positive"});
+                                          {notify: {method:'POST'}}
+                                        );
+        reminderService.notify({"personId":$scope.person.id, "categoryId":$scope.category.id, "type":$routeParams.fbtypeId});
 ;  	}]);
