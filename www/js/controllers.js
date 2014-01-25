@@ -30,9 +30,9 @@ angular.module('myApp.controllers', ['ngResource'])
   	.controller('FeedbackNotifierCtrl', ['$scope', '$routeParams', '$resource', 'people', 'categories', function ($scope, $routeParams, $resource, people, categories) {
   		  $scope.person = people.findById($routeParams.personId);
         $scope.category = categories.findById($routeParams.fbcatId);
-        var reminderService = $resource('http://feedback-web.carpmike.cloudbees.net/reminders', 
+        var reminderService = $resource(fbURL + '/reminders', 
                                           {}, 
                                           {notify: {method:'POST'}}
                                         );
-        reminderService.notify({"personId":$scope.person.id, "categoryId":$scope.category.id, "type":$routeParams.fbtypeId});
+        reminderService.notify({"personId":$scope.person.id, "categoryId":$scope.category.id, "feedbackTypeId":$routeParams.fbtypeId});
 ;  	}]);
