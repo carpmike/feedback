@@ -1,5 +1,5 @@
-// var fbURL = 'http://feedback-web.carpmike.cloudbees.net';
-var fbURL = 'http://localhost:8080/feedback-web';
+var fbURL = 'http://feedback-web.carpmike.cloudbees.net';
+// var fbURL = 'http://localhost:8080/feedback-web';
 
 angular.module('myApp', [
     'ngTouch',
