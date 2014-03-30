@@ -16,7 +16,7 @@ angular.module('myApp.controllers', ['ngResource'])
 
         // handle the authn error by forcing login - uses the auth.js modules
         $rootScope.$on('event:auth-loginRequired', function(event, rejection) {
-            console.log("got the login required event with status: " + rejection.status);  
+            console.log(":FB:got the login required event with status: " + rejection.status);  
             $scope.slide = 'slide-left';
             $location.url('/login');
         });
@@ -29,28 +29,36 @@ angular.module('myApp.controllers', ['ngResource'])
         $scope.login = function() {
             var encodedUserNameAndPassword = window.btoa(user.username + ':' + user.password);
             $http.defaults.headers.common['Authorization'] = 'Basic ' + encodedUserNameAndPassword;
-            console.log("auth string: " + $http.defaults.headers.common['Authorization']);
+            console.log(":FB:auth string: " + $http.defaults.headers.common['Authorization']);
             authService.loginConfirmed();
             $location.url('/people');
         };
     }])
     .controller('PeopleCtrl', ['$scope', 'people', function ($scope, people) {
-        $scope.people = people.people;
+        people.getPeople().then(function(results) {
+            $scope.people = results;
+        });
     }])
-  	.controller('FeedbackTypeCtrl', ['$scope', '$log','$routeParams', 'people', function ($scope, $log, $routeParams, people) {
-        $scope.person = people.findById($routeParams.personId);
+  	.controller('FeedbackTypeCtrl', ['$scope', '$routeParams', 'people', function ($scope, $routeParams, people) {
+        people.getPeople().then(function(results) {
+            $scope.person = findInList(results, $routeParams.personId);
+        });
   	}])
-    .controller('FeedbackCategoryCtrl', ['$scope', '$routeParams', 'people', 'categories', function ($scope, $routeParams, people, categories) {
-        $scope.personId = people.findById($routeParams.personId).id;
+    .controller('FeedbackCategoryCtrl', ['$scope', '$routeParams', 'categories', function ($scope, $routeParams, categories) {
+        $scope.personId = $routeParams.personId;
         $scope.fbtypeId = $routeParams.fbtypeId;
-        $scope.categories = categories.categories;
+        categories.getCategories().then(function(results) {
+            $scope.categories = results;
+            console.log(":FB:cats retrieved");
+        });
     }])
-  	.controller('FeedbackNotifierCtrl', ['$scope', '$routeParams', '$resource', 'people', 'categories', function ($scope, $routeParams, $resource, people, categories) {
-  		  $scope.person = people.findById($routeParams.personId);
-        $scope.category = categories.findById($routeParams.fbcatId);
+  	.controller('FeedbackNotifierCtrl', ['$scope', '$routeParams', '$resource', function ($scope, $routeParams, $resource) {
+  	     // $scope.person = people.findById($routeParams.personId);
+        // $scope.category = categories.findById($routeParams.fbcatId);
+
         var reminderService = $resource(fbURL + '/reminders', 
                                           {}, 
                                           {notify: {method:'POST'}}
                                         );
-        reminderService.notify({"personId":$scope.person.id, "categoryId":$scope.category.id, "feedbackTypeId":$routeParams.fbtypeId});
-;  	}]);
+        reminderService.notify({"personId":$routeParams.personId, "categoryId":$routeParams.fbcatId, "feedbackTypeId":$routeParams.fbtypeId});
+  	}]);

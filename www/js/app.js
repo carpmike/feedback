@@ -7,7 +7,6 @@ angular.module('myApp', [
     'ngAnimate',
     'http-auth-interceptor',
     'myApp.controllers',
-    'myApp.restServices',
     'myApp.domainClasses'
 ]).
 config(['$routeProvider', function ($routeProvider) {

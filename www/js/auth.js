@@ -45,9 +45,12 @@
   .config(['$httpProvider', function($httpProvider) {
     $httpProvider.interceptors.push(['$rootScope', '$q', 'httpBuffer', function($rootScope, $q, httpBuffer) {
       return {
+        request: function(config) {
+          console.log(":FB:Interceptor:Request: " + config.url);
+          return config || $q.when(config);
+        },
         responseError: function(rejection) {
-          alert("Rejection status" + rejection.status);
-          console.log("Rejection status" + rejection.status);
+          console.log(":FB:Interceptor:Rejection status: " + rejection);
           if (rejection.status === 401 && !rejection.config.ignoreAuthModule) {
             var deferred = $q.defer();
             httpBuffer.append(rejection.config, deferred);

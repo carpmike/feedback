@@ -13,27 +13,51 @@ function findInList(list, id) {
     return it;
 }
 
+var fbURL = 'http://feedback-web.carpmike.cloudbees.net';
+// var fbURL = 'http://localhost:8080/feedback-web'
+var to = 2000; // 2 second timeout
+
 angular.module('myApp.domainClasses', [])
-    .factory('people', ['$log', 'person', function ($log, person) {
-        function People() {
-            this.people = person.query();
-        }
+    .factory('people', ['$http', function ($http) {
+        var people = {
+            // returns a promise to get the people
+            getPeople: function() {
+                var peoplePromise = $http.get(fbURL + '/persons?max=50', { timeout: to })
+                    .then(function(results){
+                        //Success;
+                        console.log(":FB:Success: " + results.status + "::" + results.data);
+                        return results.data;               
+                    }, function(results){
+                        //error
+                        console.log(":FB:Error: " + results.status);
+                        return results.data;
+                    });
 
-        People.prototype.findById = function (id) {
-            return findInList(this.people, id);;
+                return peoplePromise;
+            }
         };
 
-        return new People();
+        return people;
     }])
-    .factory('categories', ['$log', 'category', function ($log, category) {
-        function Categories() {
-            this.categories = category.query();
-        }
+    .factory('categories', ['$http', function ($http) {
+        var categories = {
+            // returns a promise to get the categories
+            getCategories: function() {
+                var categoriesPromise = $http.get(fbURL + '/categories', { cache: true, timeout: to })
+                    .then(function(results){
+                        //Success;
+                        console.log("Success: " + results.status);
+                        return results.data;               
+                    }, function(results){
+                        //error
+                        console.log("Error: " + results.status);
+                        return results.data;
+                    });
 
-        Categories.prototype.findById = function (id) {
-            return findInList(this.categories, id);;
+                return categoriesPromise;
+            }            
         };
 
-        return new Categories();
+        return categories;
     }]);
 
