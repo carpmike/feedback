@@ -4,6 +4,9 @@
     </div>
 </div>
 <div>
+    <div class="center full" ng-if="failedFirstTry == true">
+        <h3>Invalid username or password</h3>
+    </div>
     <div class="center full">
         <input type="text" class="topcoat-text-input--large form-input" placeholder="Username" value="" ng-model="user.username" required />
     </div>

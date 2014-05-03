@@ -43,7 +43,7 @@ angular.module('myApp.domainClasses', [])
         var categories = {
             // returns a promise to get the categories
             getCategories: function() {
-                var categoriesPromise = $http.get(fbURL + '/categories', { cache: true, timeout: to })
+                var categoriesPromise = $http.get(fbURL + '/categories', { timeout: to })
                     .then(function(results){
                         //Success;
                         console.log("Success: " + results.status);
