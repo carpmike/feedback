@@ -13,8 +13,8 @@ function findInList(list, id) {
     return it;
 }
 
-var fbURL = 'http://feedback-web.carpmike.cloudbees.net';
-// var fbURL = 'http://localhost:8080/feedback-web'
+// var fbURL = 'http://feedback-web.carpmike.cloudbees.net';
+var fbURL = 'http://localhost:8080/feedback-web';
 var to = 2000; // 2 second timeout
 
 angular.module('myApp.domainClasses', [])

@@ -5,7 +5,7 @@
 	    </a>
     </div>
     <div class="topcoat-navigation-bar__item center half">
-        <h1 class="topcoat-navigation-bar__title nav-title">... on its way ...</h1>
+        <h1 class="topcoat-navigation-bar__title nav-title">... send it ...</h1>
     </div>
     <div class="topcoat-navigation-bar__item right quarter">
         <a class="topcoat-icon-button--quiet center nav-button" href="" ng-click="home()">
@@ -15,6 +15,14 @@
 </div>
 <div class="center full">
   <div class="center light-font">
-    <h2>A feedback reminder email was just sent to you. Instructions on what to do next are provided in the email.</h2>
+    <h2>Add some text ... or not.</h2>
   </div>
+</div>
+<div>
+    <div class="center full">
+        <textarea class="topcoat-textarea" rows="4" id="fbtext" ng-model="fbtext" style="width:90%;" maxlength="140" placeholder="Feedback info..."></textarea>
+    </div>
+    <div class="center full">
+        <button class="topcoat-button--large--cta center nav-button" ng-click="notify()">Send</button>
+    </div>
 </div>

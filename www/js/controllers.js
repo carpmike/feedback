@@ -91,9 +91,16 @@ angular.module('myApp.controllers', ['ngResource', 'http-auth-interceptor', 'Loc
         });
     }])
     .controller('FeedbackNotifierCtrl', ['$scope', '$routeParams', '$resource', function ($scope, $routeParams, $resource) {
-        var reminderService = $resource(fbURL + '/reminders',
+        $scope.personId = $routeParams.personId;
+        $scope.fbtypeId = $routeParams.fbtypeId;
+        $scope.fbcatId = $routeParams.fbcatId;
+        $scope.fbtext = "";
+
+        $scope.notify = function() {
+            var reminderService = $resource(fbURL + '/reminders',
                                           {},
                                           {notify: {method:'POST'}}
                                         );
-        reminderService.notify({"personId":$routeParams.personId, "categoryId":$routeParams.fbcatId, "feedbackTypeId":$routeParams.fbtypeId});
+            reminderService.notify({"personId":$scope.personId, "categoryId":$scope.fbcatId, "feedbackTypeId":$scope.fbtypeId, "text":$scope.fbtext});
+        };
     }]);
