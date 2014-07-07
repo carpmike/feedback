@@ -90,7 +90,7 @@ angular.module('myApp.controllers', ['ngResource', 'http-auth-interceptor', 'Loc
             console.log(":FB:cats retrieved");
         });
     }])
-    .controller('FeedbackNotifierCtrl', ['$scope', '$routeParams', '$resource', function ($scope, $routeParams, $resource) {
+    .controller('FeedbackNotifierCtrl', ['$scope', '$rootScope', '$routeParams', '$resource', function ($scope, $rootScope, $routeParams, $resource) {
         $scope.personId = $routeParams.personId;
         $scope.fbtypeId = $routeParams.fbtypeId;
         $scope.fbcatId = $routeParams.fbcatId;
@@ -102,5 +102,6 @@ angular.module('myApp.controllers', ['ngResource', 'http-auth-interceptor', 'Loc
                                           {notify: {method:'POST'}}
                                         );
             reminderService.notify({"personId":$scope.personId, "categoryId":$scope.fbcatId, "feedbackTypeId":$scope.fbtypeId, "text":$scope.fbtext});
+            $rootScope.home();
         };
     }]);
