@@ -56,11 +56,11 @@ angular.module('myApp.controllers', ['ngResource', 'http-auth-interceptor', 'Loc
                         {"ignoreAuthModule":true})
                 .success(function(results) {
 
-                console.log("auth token: " + results.token);
-                $http.defaults.headers.common['x-auth-token'] = results.token;
+                console.log("auth token: " + results.access_token);
+                $http.defaults.headers.common['x-auth-token'] = results.access_token;
                 
                 // store the token in local storage
-                localStorageService.set('FeedbockAuthToken', results.token);
+                localStorageService.set('FeedbockAuthToken', results.access_token);
 
                 // notify login confirmed
                 authService.loginConfirmed();
